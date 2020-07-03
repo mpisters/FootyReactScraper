@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick.bind(this);
+  }
+
+  async handleClick() {
+    await axios.get('/api/scrape/')
+        .then(response => {
+          console.log("RESPONSE", response)
+        })
+        .catch(console.error);
+
+  }
+
+  render() {
+    return <div className="container">
+      <button onClick={this.handleClick}>Scrape Footy</button>
+    </div>;
+  }
 }
 
 export default App;
