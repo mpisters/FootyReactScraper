@@ -9,17 +9,22 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    await axios.get('/api/scrape/')
+    const scores = await axios.get('/api/scrape/')
         .then(response => {
           if (response.data) {
+            let scores = scrapeFooty(response.data.htmlPage);
+            let columnNames = Object.keys(scores[0])
             this.setState((state) => {
-              let scores = scrapeFooty(response.data.htmlPage);
-              let columnNames = Object.keys(scores[0]);
               return {scores, columnNames};
             });
+            return scores;
           }
         })
         .catch(console.error);
+    console.log(scores);
+    await axios.post('/api/scores/', {data: scores}).then((response) => {
+      console.log('It worked', response);
+    });
   }
 
   getTeamValues(team) {

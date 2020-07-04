@@ -21,14 +21,14 @@ let getColumnNames = (columnHeaders) => {
 
 
 let getScores = (rows, keys) => {
-
+  let formattedKeys = keys.map(name => name.replace(/\./g, ""))
   let scores = [];
   for (let row of rows) {
     let values = row.childNodes;
     let team = {};
     for (let i = 0; i < values.length; i++) {
       let value = values[i];
-      team[keys[i]] = value.textContent;
+      team[formattedKeys[i]] = value.textContent;
     }
     scores.push(team);
   }
